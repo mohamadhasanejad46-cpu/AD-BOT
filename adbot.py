@@ -1457,7 +1457,7 @@ class AdvancedBot(BaseBot):
 
         try:
             count = int(parts[1])
-            spam_message = " "<.join(parts[2:]) if len(parts) > 2 else "اسپم آزمایشی!"
+            spam_message = " ".join(parts[2:]) if len(parts) > 2 else "اسپم آزمایشی!"
             if count < 1 or count > 100:
                 await self.highrise.chat("<#FFD700>تعداد پیام‌ها باید بین 1 تا 100 باشد.")
                 logger.info(f"تعداد پیام‌های نامعتبر ({count}) توسط {user.username} وارد شد.")
