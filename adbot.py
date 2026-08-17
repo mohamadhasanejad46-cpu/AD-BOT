@@ -1185,7 +1185,7 @@ class AdvancedBot(BaseBot):
             logger.info("ربات به موقعیت اولیه تلپورت شد.")
         except Exception as e:
             logger.error(f"خطا در تلپورت اولیه: {e}")
-            await self.highrise.chat(f"خطا در تلپورت اولیه: {e}")
+            await self.highrise.chat(f"<#0000FF>خطا در تلپورت اولیه: {e}")
 
         await self.sync_room_users()
         self.announcement_task = create_task(self.announcement_loop())
@@ -1218,7 +1218,7 @@ class AdvancedBot(BaseBot):
         if username in self.frozen_users:
             self.frozen_users[username].cancel()
             self.frozen_users.pop(username, None)
-        await self.highrise.chat(f"@{user.username} از روم خارج شد.")
+        await self.highrise.chat(f"<#0066FF>@{user.username} از روم خارج شد.")
         logger.info(f"کاربر {user.username} (ID: {user.id}) از روم خارج شد. موقعیت: {position}")
 
     async def sync_room_users(self):
@@ -1243,7 +1243,7 @@ class AdvancedBot(BaseBot):
                 self.user_positions[username] = user_data[1]
             
             logger.info(f"همگام‌سازی کاربران انجام شد. تعداد کاربران: {len(self.active_users)}. کاربران: {[user.username for user in self.active_users.values()]}")
-            await self.highrise.chat(f"{len(self.active_users)} کاربر در روم شناسایی شدند.")
+            await self.highrise.chat(f"<#0066FF>{len(self.active_users)} کاربر در روم شناسایی شدند.")
         except Exception as e:
             logger.error(f"خطا در همگام‌سازی کاربران: {e}", exc_info=True)
             await self.highrise.chat("خطا در شناسایی کاربران روم.")
@@ -1379,7 +1379,7 @@ class AdvancedBot(BaseBot):
     async def stop_dance(self, user: User):
         username = user.username.lower()
         if username in self.party_dances and self.party_dances[username][1]:
-            await self.highrise.chat(f"@{username} نمی‌توانید رقص اجباری را متوقف کنید! فقط ادمین با !partys می‌تواند آن را متوقف کند.")
+            await self.highrise.chat(f"<#0000FF>@{username} نمی‌توانید رقص اجباری را متوقف کنید! فقط ادمین با !partys می‌تواند آن را متوقف کند.")
             logger.info(f"کاربر {username} سعی کرد رقص اجباری را متوقف کند اما مجاز نیست.")
             return
         if username in self.dance_tasks:
@@ -1394,50 +1394,50 @@ class AdvancedBot(BaseBot):
 
     async def cmd_help(self, user: User, parts: list):
         help_text = (
-            "دستورات ربات:\n"
-            "1-6 - اجرای رقص\n"
-            "stop - توقف رقص\n"
-            "!help - نمایش راهنما\n"
-            "!spam تعداد پیام - ارسال پیام اسپم\n"
-            "!tele @username [vip|vip1|dj|مکان_سفارشی] - تلپورت کاربر\n"
-            "!tele to @username - تلپورت به کاربر\n"
-            "!tele me @username - تلپورت کاربر به ادمین\n"
-            "!tele me all - تلپورت همه به ادمین\n"
-            "!heart تعداد @username - ارسال قلب بنفش\n"
-            "!heart all - قلب بنفش به همه\n"
-            "!clap تعداد @username - ارسال clap\n"
-            "!clap all - clap به همه\n"
-            "!wink تعداد @username - ارسال wink\n"
-            "!wink all - wink به همه\n"
-            "!wave تعداد @username - ارسال wave\n"
-            "!wave all - wave به همه\n"
-            "!thumbs تعداد @username - ارسال thumbs-up\n"
-            "!thumbs all - thumbs-up به همه\n"
-            "!wallet - نمایش موجودی ربات\n"
-            "!set - تلپورت ربات به ادمین\n"
-            "!item set @username - تغییر ظاهر ربات به ایتم‌های کاربر\n"
-            "!tip <تعداد> all - تیپ به همه\n"
-            "!vip - تلپورت به VIP\n"
-            "!vip1 - تلپورت به VIP1\n"
-            "!dj - تلپورت به DJ\n"
-            "!down - تلپورت به پایین\n"
-            "!ban @username - بن کردن کاربر\n"
-            "!unban @username - آنبن کردن کاربر\n"
-            "!dancechain - اجرای زنجیره رقص\n"
-            "!addtele نام_مکان - ذخیره مکان جدید\n"
-            "!deltele نام_مکان - حذف مکان تلپورت\n"
-            "!welcome پیام - تنظیم پیام خوش‌آمدگویی\n"
-            "!addadmin @username - افزودن ادمین (فقط Host)\n"
-            "!removeadmin @username - حذف ادمین (فقط Host)\n"
-            "!emotebot نام/شماره_دنس - تغییر دنس مداوم ربات (فقط ادمین)\n"
-            "!loopchat پیام - تنظیم پیام تکرارشونده/اسپم ربات (فقط ادمین)\n"
-            "!listadd - نمایش لیست ادمین‌ها\n"
-            "!freeze @username - فریز کردن کاربر\n"
-            "!unfreeze @username - آزاد کردن کاربر از فریز\n"
-            "!party @username عدد - اجرای رقص اجباری برای کاربر\n"
-            "!party all عدد - اجرای رقص برای همه\n"
-            "!partys @username - توقف رقص اجباری کاربر\n\n"
-            "📩 برای اطلاعات بیشتر به @800.98 پیام بدید!"
+            "<#FFD700>دستورات ربات:\n"
+            "<#0000FF>1-6 - اجرای رقص\n"
+            "<#FF0000>stop - توقف رقص\n"
+            "<#0066FF>!help - نمایش راهنما\n"
+            "<#7CFF6B>!spam تعداد پیام - ارسال پیام اسپم\n"
+            "<#FFD700>!tele @username [vip|vip1|dj|مکان_سفارشی] - تلپورت کاربر\n"
+            "<#0000FF>!tele to @username - تلپورت به کاربر\n"
+            "<#FF0000>!tele me @username - تلپورت کاربر به ادمین\n"
+            "<#FF0000>!tele me all - تلپورت همه به ادمین\n"
+            "<#0066FF>!heart تعداد @username - ارسال قلب بنفش\n"
+            "<#7CFF6B>!heart all - قلب بنفش به همه\n"
+            "<#FFD700>!clap تعداد @username - ارسال clap\n"
+            "<#0000FF>!clap all - clap به همه\n"
+            "<#FF0000>!wink تعداد @username - ارسال wink\n"
+            "<#0066FF>!wink all - wink به همه\n"
+            "<#7CFF6B>!wave تعداد @username - ارسال wave\n"
+            "<#FFD700>!wave all - wave به همه\n"
+            "<#0000FF>!thumbs تعداد @username - ارسال thumbs-up\n"
+            "<#FF0000>!thumbs all - thumbs-up به همه\n"
+            "<#FFD700>!wallet - نمایش موجودی ربات\n"
+            "<#0000FF>!set - تلپورت ربات به ادمین\n"
+            "<#FF0000>!item set @username - تغییر ظاهر ربات به ایتم‌های کاربر\n"
+            "<#0066FF>!tip <تعداد> all - تیپ به همه\n"
+            "<#7CFF6B>!vip - تلپورت به VIP\n"
+            "<#7CFF6B>!vip1 - تلپورت به VIP1\n"
+            "<#0000FF>!dj - تلپورت به DJ\n"
+            "<#FF0000>!down - تلپورت به پایین\n"
+            "<#0066FF>!ban @username - بن کردن کاربر\n"
+            "<#7CFF6B>!unban @username - آنبن کردن کاربر\n"
+            "<#FFD700>!dancechain - اجرای زنجیره رقص\n"
+            "<#0000FF>!addtele نام_مکان - ذخیره مکان جدید\n"
+            "<#FF0000>!deltele نام_مکان - حذف مکان تلپورت\n"
+            "<#FF0000>!welcome پیام - تنظیم پیام خوش‌آمدگویی\n"
+            "<#0066FF>!addadmin @username - افزودن ادمین (فقط Host)\n"
+            "<#7CFF6B>!removeadmin @username - حذف ادمین (فقط Host)\n"
+            "<#FFD700>!emotebot نام/شماره_دنس - تغییر دنس مداوم ربات (فقط ادمین)\n"
+            "<#0000FF>!loopchat پیام - تنظیم پیام تکرارشونده/اسپم ربات (فقط ادمین)\n"
+            "<#FF0000>!listadd - نمایش لیست ادمین‌ها\n"
+            "<#0066FF>!freeze @username - فریز کردن کاربر\n"
+            "<#7CFF6B>!unfreeze @username - آزاد کردن کاربر از فریز\n"
+            "<#FFD700>!party @username عدد - اجرای رقص اجباری برای کاربر\n"
+            "<#0000FF>!party all عدد - اجرای رقص برای همه\n"
+            "<#FF0000>!partys @username - توقف رقص اجباری کاربر\n\n"
+            "<#FF0000>📩 برای اطلاعات بیشتر به @800.98 پیام بدید!"
         )
         for chunk in [help_text[i:i+200] for i in range(0, len(help_text), 200)]:
             await self.highrise.chat(chunk)
