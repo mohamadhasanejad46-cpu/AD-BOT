@@ -2336,9 +2336,9 @@ class AdvancedBot(BaseBot):
             logger.error(f"خطا در cmd_removeadmin برای {target_username}: {str(e)}")
 
     async def cmd_addhost(self, user: User, parts: list):
-        """⚠️ اختصاصی: فقط خود مالک اصلی بات (800.98) می‌تواند رتبه Host بدهد؛
+        """⚠️ اختصاصی: فقط خود مالک اصلی بات (ad0ri) می‌تواند رتبه Host بدهد؛
         حتی سایر Host‌ها هم اجازه اجرای این دستور را ندارند."""
-        if user.username.lower() != "800.98":
+        if user.username.lower() != "ad0ri":
             await self.highrise.chat("❌ دسترسی غیرمجاز!")
             logger.info(f"کاربر {user.username} سعی کرد !addhost را اجرا کند اما دسترسی ندارد.")
             return
@@ -2366,8 +2366,8 @@ class AdvancedBot(BaseBot):
             logger.error(f"خطا در cmd_addhost برای {target_username}: {str(e)}")
 
     async def cmd_removehost(self, user: User, parts: list):
-        """⚠️ اختصاصی: فقط خود مالک اصلی بات (800.98) می‌تواند رتبه Host را بگیرد."""
-        if user.username.lower() != "800.98":
+        """⚠️ اختصاصی: فقط خود مالک اصلی بات (ad0ri) می‌تواند رتبه Host را بگیرد."""
+        if user.username.lower() != "ad0ri":
             await self.highrise.chat("❌ دسترسی غیرمجاز!")
             logger.info(f"کاربر {user.username} سعی کرد !removehost را اجرا کند اما دسترسی ندارد.")
             return
