@@ -1302,7 +1302,7 @@ class AdvancedBot(BaseBot):
             elif msg_lower in ["stop", "استوپ"]:
                 await self.stop_dance(user)
             elif msg_lower in ["سازنده", "creature", "creator", "سازندت", "سازنده بات"]:
-                await self.highrise.chat(" <#00BFFF> 👑 سازنده این بات:@800.98 👑")
+                await self.highrise.chat("👑 سازنده این بات:@800.98 👑")
             elif msg_lower.startswith("!"):
                 parts = msg.split()
                 parts_lower = [p.lower() for p in parts]
