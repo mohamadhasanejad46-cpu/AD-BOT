@@ -1459,7 +1459,7 @@ class AdvancedBot(BaseBot):
             count = int(parts[1])
             spam_message = " ".join(parts[2:]) if len(parts) > 2 else "اسپم آزمایشی!"
             if count < 1 or count > 100:
-                await self.highrise.chat("<#FFD700>تعداد پیام‌ها باید بین 1 تا 100 باشد.")
+                await self.highrise.chat("تعداد پیام‌ها باید بین 1 تا 100 باشد.")
                 logger.info(f"تعداد پیام‌های نامعتبر ({count}) توسط {user.username} وارد شد.")
                 return
 
@@ -1467,9 +1467,9 @@ class AdvancedBot(BaseBot):
                 await self.highrise.chat(spam_message)
                 await sleep(2.0)
             logger.info(f"{count} پیام اسپم توسط {user.username} ارسال شد: {spam_message}")
-            await self.highrise.chat(f"<#FF0000>{count} پیام اسپم ارسال شد!")
+            await self.highrise.chat(f"{count} پیام اسپم ارسال شد!")
         except Exception as e:
-            await self.highrise.chat(f"<#0000FF>خطا در ارسال پیام اسپم: {str(e)}")
+            await self.highrise.chat(f"خطا در ارسال پیام اسپم: {str(e)}")
             logger.error(f"خطا در cmd_spam برای {user.username}: {str(e)}")
 
     async def cmd_tele(self, user: User, parts: list):
@@ -1545,7 +1545,7 @@ class AdvancedBot(BaseBot):
         elif len(parts) == 3 and parts[1] == "me" and parts[2] == "all":
             admin_position = self.user_positions.get(user.username.lower())
             if not admin_position:
-                await self.highrise.chat("<#FF0000>موقعیت شما در دسترس نیست.")
+                await self.highrise.chat("موقعیت شما در دسترس نیست.")
                 logger.info(f"موقعیت {user.username} برای تلپورت همه کاربران در دسترس نیست.")
                 return
             try:
@@ -1598,15 +1598,15 @@ class AdvancedBot(BaseBot):
                         successful_hearts += 1
                         await sleep(0.5)
                     except Exception as e:
-                        await self.highrise.chat(f"<#FF0000>خطا در ارسال قلب بنفش به @{target_user.username}: {e}")
+                        await self.highrise.chat(f"خطا در ارسال قلب بنفش به @{target_user.username}: {e}")
                         logger.error(f"خطا در ارسال قلب به {target_user.username}: {e}")
                 if successful_hearts > 0:
                     await self.highrise.chat(self.get_message("heart_all_success", count=successful_hearts))
                     logger.info(f"قلب بنفش به {successful_hearts} نفر ارسال شد.")
                 else:
-                    await self.highrise.chat("<#0066FF>هیچ قلبی با موفقیت ارسال نشد.")
+                    await self.highrise.chat("هیچ قلبی با موفقیت ارسال نشد.")
             except Exception as e:
-                await self.highrise.chat(f"<#0066FF>خطا در اجرای دستور: {e}")
+                await self.highrise.chat(f"خطا در اجرای دستور: {e}")
                 logger.error(f"خطا در ارسال قلب به همه: {e}")
             return
 
@@ -1617,7 +1617,7 @@ class AdvancedBot(BaseBot):
         try:
             count = int(parts[1])
             if count < 1 or count > 100:
-                await self.highrise.chat(f"<#FF0000>@{user.username}: تعداد باید بین 1 تا 100 باشد.")
+                await self.highrise.chat(f"@{user.username}: تعداد باید بین 1 تا 100 باشد.")
                 return
         except ValueError:
             await self.highrise.chat(f"@{user.username}: عدد نامعتبر است.")
@@ -1656,7 +1656,7 @@ class AdvancedBot(BaseBot):
                 active_users = list(self.active_users.items())
                 active_users_count = len([u for u in active_users if u[1].id != self.user_id])
                 if active_users_count == 0:
-                    await self.highrise.chat("<#0000FF>هیچ کاربری در روم آنلاین نیست!")
+                    await self.highrise.chat("هیچ کاربری در روم آنلاین نیست!")
                     return
                 reaction_id = "clap"
                 successful_reactions = 0
@@ -1664,7 +1664,7 @@ class AdvancedBot(BaseBot):
                     if target_user.id == self.user_id:
                         continue
                     if username not in self.active_users:
-                        logger.info(f"<#FF0000>کاربر {username} در حین ارسال clap آفلاین شد.")
+                        logger.info(f"کاربر {username} در حین ارسال clap آفلاین شد.")
                         continue
                     try:
                         await self.highrise.react(reaction_id, target_user.id)
@@ -1674,7 +1674,7 @@ class AdvancedBot(BaseBot):
                         await self.highrise.chat(f"خطا در ارسال clap به @{target_user.username}: {e}")
                         logger.error(f"خطا در ارسال clap به {target_user.username}: {e}")
                 if successful_reactions > 0:
-                    await self.highrise.chat(self.get_message("<#0000FF>heart_all_success", count=successful_reactions))
+                    await self.highrise.chat(self.get_message("heart_all_success", count=successful_reactions))
                     logger.info(f"Clap به {successful_reactions} نفر ارسال شد.")
                 else:
                     await self.highrise.chat("هیچ clap با موفقیت ارسال نشد.")
@@ -1684,7 +1684,7 @@ class AdvancedBot(BaseBot):
             return
 
         if len(parts) != 3:
-            await self.highrise.chat(self.get_message("<#0000FF>invalid_format", format="<#0066FF>!clap تعداد @username یا !clap all"))
+            await self.highrise.chat(self.get_message("<#0000FF>invalid_format", format="!clap تعداد @username یا !clap all"))
             return
 
         try:
@@ -1693,7 +1693,7 @@ class AdvancedBot(BaseBot):
                 await self.highrise.chat(f"@{user.username}: تعداد باید بین 1 تا 100 باشد.")
                 return
         except ValueError:
-            await self.highrise.chat(f"<#FF0000>@{user.username}: عدد نامعتبر است.")
+            await self.highrise.chat(f"@{user.username}: عدد نامعتبر است.")
             return
 
         target_username = parts[2].lstrip('@').lower()
@@ -1875,7 +1875,7 @@ class AdvancedBot(BaseBot):
                 active_users = list(self.active_users.items())
                 active_users_count = len([u for u in active_users if u[1].id != self.user_id])
                 if active_users_count == 0:
-                    await self.highrise.chat("<#FF0000>هیچ کاربری در روم آنلاین نیست!")
+                    await self.highrise.chat("هیچ کاربری در روم آنلاین نیست!")
                     return
                 reaction_id = "thumbs-up"
                 successful_reactions = 0
